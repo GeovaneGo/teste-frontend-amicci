@@ -4,7 +4,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
-In the project directory, you can run:
+You will need to add typescript in the project with:
+
+### `npm install typescript`
+
+Next, in the project directory, you can run:
 
 ### `npm start`
 
