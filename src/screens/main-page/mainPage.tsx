@@ -1,7 +1,7 @@
 export const MainPage =()=>{
    return (
     <div>
-        Hello Guys
+       <h1>Hello Guys</h1> 
     </div>
    ) 
 }

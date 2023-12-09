@@ -1,8 +1,10 @@
 import { render, screen } from '@testing-library/react';
-import Router from './Router';
+import { describe } from 'node:test';
+import MainPage from './screens/main-page/mainPage';
 
-test('renders learn react link', () => {
-  render(<Router />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
-});
+describe("Hello guys Test", () => {
+  it("render conrrectly", () => {
+    render(<MainPage/>)
+    expect(screen.getByText("Hello guys")).toBeInTheDocument();
+  })
+})
