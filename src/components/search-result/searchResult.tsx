@@ -1,42 +1,61 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faCloudSun,
   faDroplet,
   faLocationDot,
   faTemperature3,
   faWind,
 } from "@fortawesome/free-solid-svg-icons";
+import { ResultContainer } from "./searchResult.styled";
+import { DefaultH1, DefaultLabels } from "../../usables/globalStyles.styled";
 
 export const SearchResult = (weatherParams: any) => {
   const params = weatherParams.weatherParams;
 
   return (
-    <div>
-      <h2>
+    <ResultContainer>
+      <DefaultH1>
         <FontAwesomeIcon icon={faLocationDot} /> {params.location}
         <img
-          src={`https://countryflagsapi.netlify.app/flag/br.svg`}
-          style={{ width: "20px", margin: "auto", marginLeft: "15px" }}
+          src={`https://countryflagsapi.netlify.app/flag/${
+            params.flag || "br"
+          }.svg`}
+          style={{ width: "30px", margin: "auto", marginLeft: "15px" }}
           alt=""
         ></img>
-      </h2>
-      <p>
-        <FontAwesomeIcon icon={faTemperature3} /> Temperatura: {params.temp}
-        <span></span>
-      </p>
-      <p>
-        <FontAwesomeIcon icon={faCloudSun} /> Clima: {params.weather}
-        <span></span>
-      </p>
-      <p>
-        <FontAwesomeIcon icon={faDroplet} /> Umidade: {params.humidity}
-        <span></span>
-      </p>
-      <p>
-        <FontAwesomeIcon icon={faWind} /> Vento: {params.wind}
-        <span></span>
-      </p>
-    </div>
+      </DefaultH1>
+      <div>
+        <DefaultLabels $setMargin='0 15px 0 15px'>
+          <FontAwesomeIcon icon={faTemperature3} /> {parseInt(params.temp)} °C
+        </DefaultLabels>
+        <DefaultLabels $setMargin='0 15px'>{params.weather}</DefaultLabels>
+      </div>
+      <div
+        style={{
+          textAlign: "center",
+        }}
+      >
+        <p>
+          <img
+            src={`https://openweathermap.org/img/wn/${
+              params.icon || "01d"
+            }@2x.png`}
+            alt=""
+            style={{ width: "150px", margin: "auto" }}
+          />
+        </p>
+      </div>
+      <div>
+        <p>
+          <DefaultLabels $setMargin='0 15px'>
+            <FontAwesomeIcon icon={faDroplet} /> {params.humidity}%<span></span>
+          </DefaultLabels>
+          <DefaultLabels $setMargin='15px 0' >
+            <FontAwesomeIcon icon={faWind} /> {params.wind} Km/h
+            <span></span>
+          </DefaultLabels>
+        </p>
+      </div>
+    </ResultContainer>
   );
 };
 
