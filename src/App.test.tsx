@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
-import { describe } from 'node:test';
 import MainPage from './screens/main-page/mainPage';
+import { describe } from 'node:test';
 
 describe("Hello guys Test", () => {
   it("render conrrectly", () => {
     render(<MainPage/>)
-    expect(screen.getByText("Hello guys")).toBeInTheDocument();
+    expect(screen.getByText("Pesquise o clima!")).toBeInTheDocument();
   })
 })
