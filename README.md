@@ -4,7 +4,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
-You will need to add typescript in the project with:
+### 
+
+Navegar até o arquivo `./usables/usables.tsx` e adicionar as keys pessoais do Google Geolocation e Open Weather API para efetividade na execução do projeto. 
+
+Adicionar o typescript ao projeto baixado:
 
 ### `npm install typescript`
 

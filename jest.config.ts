@@ -20,7 +20,13 @@ export default {
   // collectCoverage: false,
 
   // An array of glob patterns indicating a set of files for which coverage information should be collected
-  // collectCoverageFrom: undefined,
+  collectCoverageFrom: [
+    'src//*.{js,jsx,ts,tsx}',
+    '!/dist/',
+    '!src//.{style,styles}.{js,ts,tsx}',
+    '!src/**/.stories.{js,ts,tsx}',
+    '!src/index.ts', // this index.ts is only to export all the components, we don't need to collect coverage from it
+  ],
 
   // The directory where Jest should output its coverage files
   // coverageDirectory: undefined,
@@ -173,30 +179,9 @@ export default {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    "^.+\\.(t|j)sx?$": [
-      "@swc/jest",
-      {
-        jsc: {
-          parser: {
-            syntax: "typescript",
-            tsx: true,
-            decorators: true,
-          },
-          keepClassNames: true,
-          transform: {
-            legacyDecorator: true,
-            decoratorMetadata: true,
-            react: {
-              runtime: "automatic",
-            },
-          },
-        },
-        module: {
-          type: "es6",
-          noInterop: false,
-        },
-      },
-    ],
+    '^.+\.js$': 'babel-jest',
+    '^.+\.tsx?$': 'ts-jest',
+    '^.+\.jsx?$': 'babel-jest'
   },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
