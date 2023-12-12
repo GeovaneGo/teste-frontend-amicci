@@ -1,20 +1,81 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { SeatchButton } from "./inputSearch.styled";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import {
+  InputContainer,
+  SearchInput,
+  SeatchButton,
+} from "./inputSearch.styled";
+import { faLocationDot, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { StandaloneSearchBox, LoadScript } from "@react-google-maps/api";
+import { useRef, useState } from "react";
 import Usables from "../../usables/usables";
 
-export const SearchField = ({ searchEvent }: { searchEvent: any }) => {
+export const SearchField = ({
+  searchEvent,
+  localWeather,
+  searchByButton
+}: {
+  searchEvent: any;
+  localWeather: any;
+  searchByButton: any;
+}) => {
+  const [inputValue, setInputValue]=useState<string>("")
+  const inputItem: any = useRef();
+
+  const SearchEvent = () => {
+    const place = inputItem.current.getPlaces();
+    if (place) {
+      searchEvent(place);
+    }
+  };
+
+  const SearchByButtonn =()=> {    
+    if(inputValue !== ""){  
+      searchByButton(inputValue);
+    }
+  }
+
+  const ClearInput = () => {
+    if(inputValue !== ""){
+      setInputValue("");
+    }
+    localWeather();  
+  }
+
   return (
-    <div>
-      <input
-        id="autocomplete"
-        onKeyDown={(e) => searchEvent(e)}
-        placeholder="Pesquise um local: Ex. 'Curitiba'"
-      ></input>
-      <SeatchButton>
-        <FontAwesomeIcon icon={faSearch} />
-      </SeatchButton>
+    <div style={{margin: "20px 0"}}>
+      <LoadScript
+        googleMapsApiKey={`${Usables.googleKey}`}
+        libraries={["places"]}
+      >
+        <StandaloneSearchBox
+          onLoad={(ref) => (inputItem.current = ref)}
+          onPlacesChanged={SearchEvent}
+        >
+          <InputContainer>
+            <SearchInput
+              id="autocomplete"
+              type="texts"
+              placeholder="Pesquise um local: Ex. 'Curitiba'"
+              onChange={(e) => setInputValue(e.target.value)}
+              value={inputValue}
+            ></SearchInput>
+            <SeatchButton onClick={SearchByButtonn}>
+              <FontAwesomeIcon
+                icon={faSearch}
+                style={{ width: "20px", height: "20px" }}
+              />
+            </SeatchButton>
+            <SeatchButton onClick={ClearInput}>
+              <FontAwesomeIcon
+                icon={faLocationDot}
+                style={{ width: "20px", height: "20px" }}
+              />
+            </SeatchButton>
+          </InputContainer>
+        </StandaloneSearchBox>
+      </LoadScript>
     </div>
+    
   );
 };
 
