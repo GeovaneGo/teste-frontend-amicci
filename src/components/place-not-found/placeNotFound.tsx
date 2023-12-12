@@ -1,39 +1,39 @@
-import NotFoundImage from "../../placeNotFound.png";
-import { DivPaddings } from "../../usables/globalStyles.styled";
-import { DefaultImg, DivContent, MainDiv } from "./placeNotFound.styled";
+import {
+  DefaultLabels,
+  DivPaddings,
+  LittleSpan,
+} from "../../usables/globalStyles.styled";
+import { DivContent, MainDiv } from "./placeNotFound.styled";
+import DesertPlace from "../../desertplace.png";
 
 export const PlaceNotFound = () => {
   return (
-    <DivPaddings style={{marginTop: "30px"}}>
-      <MainDiv>
-        <DivContent>
-          <DefaultImg src={NotFoundImage}></DefaultImg>
-        </DivContent>
-        <DivContent>
+    <DivPaddings style={{ marginTop: "50px" }}>
+      <MainDiv $bgImage={DesertPlace}>
+        <DivContent></DivContent>
+        <DivContent style={{ background: "rgba(255,255,255,0.4)" }}>
           <div style={{ margin: "auto" }}>
-            <h3 style={{ color: "#4d4d4d" }}>
+            <DefaultLabels $setColor="#063640" style={{ fontSize: "30px" }}>
               Nenhum local corresponde à sua pesquisa!
-            </h3>
-            <p style={{ color: "#4d4d4d" }}>
-              <strong>
-                Experimente estas sugestões para encontrar um local:
-              </strong>
-            </p>
+            </DefaultLabels>
+            <DefaultLabels $setColor="#063640" style={{ fontSize: "20px" }}>
+              <p>Experimente estas sugestões para encontrar um local:</p>
+            </DefaultLabels>
             <ul>
               <li>
-                <p style={{ color: "#4d4d4d" }}>
+                <LittleSpan style={{ color: "#063640" }}>
                   Reduza o número de parâmetros de pesquisa.
-                </p>
+                </LittleSpan>
               </li>
               <li>
-                <p style={{ color: "#4d4d4d" }}>
+                <LittleSpan style={{ color: "#063640" }}>
                   Clique na sugestão do autocomplete.
-                </p>
+                </LittleSpan>
               </li>
               <li>
-                <p style={{ color: "#4d4d4d" }}>
+                <LittleSpan style={{ color: "#063640", fontWeight: "600" }}>
                   Selecione o item sugerido com a seta e precione entrer.
-                </p>
+                </LittleSpan>
               </li>
             </ul>
           </div>

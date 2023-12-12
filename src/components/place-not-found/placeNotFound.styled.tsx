@@ -20,7 +20,7 @@ export const Root = styled.div`
   }
 `;
 
-export const MainDiv = styled.div`
+export const MainDiv = styled.div<{ $bgImage?: string }>`
   min-height: 400px;
   display: grid;
   grid-template-columns: 1fr;
@@ -28,7 +28,8 @@ export const MainDiv = styled.div`
   border-radius: 10px;
   border-color: gray;
   border-style: solid;
-  background-color: white;
+  background: url(${(props) => props.$bgImage || "white"});
+  background-size: cover;
 
   @media (min-width: 600px) {
     grid-template-columns: 1fr;
