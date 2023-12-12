@@ -12,13 +12,14 @@ import Usables from "../../usables/usables";
 export const SearchField = ({
   searchEvent,
   localWeather,
-  searchByButton
+  searchByButton,
 }: {
   searchEvent: any;
   localWeather: any;
   searchByButton: any;
 }) => {
-  const [inputValue, setInputValue]=useState<string>("")
+  const [inputValue, setInputValue] = useState<string>("");
+  const [inputElement, setInput] = useState<any>();
   const inputItem: any = useRef();
 
   const SearchEvent = () => {
@@ -28,21 +29,22 @@ export const SearchField = ({
     }
   };
 
-  const SearchByButtonn =()=> {    
-    if(inputValue !== ""){  
+  const SearchByButtonn = () => {
+    if (inputValue !== "") {
       searchByButton(inputValue);
     }
-  }
+  };
 
   const ClearInput = () => {
-    if(inputValue !== ""){
+    if (inputValue !== "") {
       setInputValue("");
+      inputElement.value = "";
     }
-    localWeather();  
-  }
+    localWeather();
+  };
 
   return (
-    <div style={{margin: "20px 0"}}>
+    <div style={{ margin: "20px 0" }}>
       <LoadScript
         googleMapsApiKey={`${Usables.googleKey}`}
         libraries={["places"]}
@@ -55,9 +57,11 @@ export const SearchField = ({
             <SearchInput
               id="autocomplete"
               type="texts"
-              placeholder="Pesquise um local: Ex. 'Curitiba'"
-              onChange={(e) => setInputValue(e.target.value)}
-              value={inputValue}
+              placeholder="Buscar local: Ex. 'Curitiba'"
+              onChange={(e) => {
+                setInputValue(e.target.value);
+                setInput(e.target);
+              }}
             ></SearchInput>
             <SeatchButton onClick={SearchByButtonn}>
               <FontAwesomeIcon
@@ -65,7 +69,7 @@ export const SearchField = ({
                 style={{ width: "20px", height: "20px" }}
               />
             </SeatchButton>
-            <SeatchButton onClick={ClearInput}>
+            <SeatchButton onClick={() => ClearInput()}>
               <FontAwesomeIcon
                 icon={faLocationDot}
                 style={{ width: "20px", height: "20px" }}
@@ -75,7 +79,6 @@ export const SearchField = ({
         </StandaloneSearchBox>
       </LoadScript>
     </div>
-    
   );
 };
 

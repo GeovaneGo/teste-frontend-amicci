@@ -1,8 +1,10 @@
 import {
+  BannerName,
+  ImgFooter,
   InfoContainer,
   MainHeader,
   Root,
-  Rootcontainer
+  Rootcontainer,
 } from "./mainPage.styled";
 import SearchField from "../../components/input-search/inputSearch";
 import SearchResult from "../../components/search-result/searchResult";
@@ -10,8 +12,14 @@ import { useEffect, useState } from "react";
 import weatherAPi from "../../api/weatherApi";
 import Usables from "../../usables/usables";
 import PlaceNotFound from "../../components/place-not-found/placeNotFound";
-import { DefaultH1, DivPaddings } from "../../usables/globalStyles.styled";
-import  WeatherLogo from "../../weather.png"
+import {
+  DefaultH1,
+  DivPaddings,
+  LittleSpan,
+} from "../../usables/globalStyles.styled";
+import LinkeLogo from "../../linkedin.png";
+import Whats from "../../whatsapp.png";
+import BannerImg from "../../banner.png";
 import Skeleton from "../../components/skeleton-loading/skeletonLoading";
 //import geolocationApi from "../../api/geolocationApi";
 
@@ -20,9 +28,34 @@ export const MainPage = () => {
   const [preventDone, setPreventDone] = useState(false);
   const [itemFound, setItemFound] = useState(true);
   const [cityName, setCityName] = useState<string>();
-  const [loading, setLoading]=useState(true);
+  const [loading, setLoading] = useState(true);
 
   const getWeather = (url: string) => {
+    const getWeekday: any = {
+      0: "Domingo",
+      1: "Segunda-feira",
+      2: "Terça-feira",
+      3: "Quarta-feira",
+      4: "Quinta-feira",
+      5: "Sexta-feira",
+      6: "Sábado",
+    };
+
+    const getMonth: any = {
+      1: "Janeiro",
+      2: "Fevereiro",
+      3: "Março",
+      4: "Abril",
+      5: "Maio",
+      6: "Junho",
+      7: "Julho",
+      8: "Agosto",
+      9: "Setembro",
+      10: "Outubro",
+      11: "Novembro",
+      12: "Dezembro",
+    };
+
     weatherAPi
       .get(
         `weather?${url}&lang=pt_br&appid=${Usables.weatherKey}&units=metric `
@@ -39,28 +72,38 @@ export const MainPage = () => {
           temp_min: res.data.main.temp_min,
           wind: res.data.wind.speed,
           flag: res.data.sys.country,
-          icon: res.data.weather[0].icon,
+          icon: res.data.weather[0].icon.substring(
+            0,
+            res.data.weather[0].icon.length - 1
+          ),
           date: getDate(res.data.dt),
           coords: {
             lat: res.data.coord.lat,
-            lon: res.data.coord.lon
-          }
+            lon: res.data.coord.lon,
+          },
         });
       })
-      .catch(error => {
+      .catch((error) => {
         setLoading(false);
         setItemFound(false);
-      })
+      });
 
-      function getDate (dateValue: number): string{
-        const date = new Date(dateValue * 1000);
-        const day  = date.getDate().toString().padStart(2, '0');
-        const month  = (date.getMonth()+1).toString().padStart(2, '0');
-        const fullYear = date.getFullYear();
-        const hour = date.getUTCHours();
-        const min = date.getUTCMinutes();
-        return day + "/" + month + "/" + fullYear + " " + hour + ":" + min;
-      }
+    function getDate(dateValue: number): string {
+      const date = new Date(dateValue * 1000);
+      const weekDay = date.getDay().toString();
+      const day = date.getDate().toString().padStart(2, "0");
+      const month = (date.getMonth() + 1).toString().padStart(2, "0");
+      const fullYear = date.getFullYear();
+      return (
+        getWeekday[weekDay] +
+        " - " +
+        day +
+        " de " +
+        getMonth[month] +
+        " de " +
+        fullYear
+      );
+    }
   };
 
   const getUserPosition = () => {
@@ -68,7 +111,9 @@ export const MainPage = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((pos) => {
         setPreventDone(true);
-        getWeather(`lat=${pos.coords.latitude.toString()}&lon=${pos.coords.longitude.toString()}`);
+        getWeather(
+          `lat=${pos.coords.latitude.toString()}&lon=${pos.coords.longitude.toString()}`
+        );
         /*
         *
         * Alterado o código para não utilizar o GoogleMaps APi
@@ -76,6 +121,7 @@ export const MainPage = () => {
         * mudanto os paramentros "lat={latitude}&lon={longitude}" para "q={cityName}"
         * Caso necessite verificação de funcionalidade, comentar o código acima e descomentar este,
         * O retorno aparecerá no console.log
+        * Remover também o comentario do import
         * 
           geolocationApi
             .get(`json?latlng=${latLng}&key=${Usables.googleKey}`)
@@ -95,7 +141,7 @@ export const MainPage = () => {
     console.log(place);
     if (place.length > 0) {
       const cityName = place[0].name;
-      setCityName(cityName)
+      setCityName(cityName);
       getWeather(`q=${cityName}`);
     } else {
       setLoading(false);
@@ -103,11 +149,11 @@ export const MainPage = () => {
     }
   };
 
-  const SearchByButton =(inputValue: string)=>{  
-    setLoading(true);  
-    setCityName(cityName)
+  const SearchByButton = (inputValue: string) => {
+    setLoading(true);
+    setCityName(cityName);
     getWeather(`q=${inputValue}`);
-  }
+  };
 
   useEffect(() => {
     if (!preventDone) {
@@ -118,11 +164,10 @@ export const MainPage = () => {
 
   return (
     <Root>
-      <MainHeader>
-        
-        <img src={WeatherLogo} alt=""></img>
+      <MainHeader $setHeight="90px">
+        <BannerName $srcImg={BannerImg}></BannerName>
       </MainHeader>
-      <Rootcontainer  $bgImage={Usables.photos + `${cityName}`}>
+      <Rootcontainer $bgImage={Usables.photos + `${cityName}`}>
         <DivPaddings>
           <InfoContainer>
             <div>
@@ -134,20 +179,36 @@ export const MainPage = () => {
                 searchByButton={SearchByButton}
               ></SearchField>
             </div>
-              {loading &&
-                <Skeleton></Skeleton>
-              }
-              {itemFound && !loading &&
-                <SearchResult weatherParams={params}></SearchResult>
-              }
-              {!itemFound && !loading &&
-                <PlaceNotFound></PlaceNotFound> 
-              }
-              
+            {loading && <Skeleton></Skeleton>}
+            {itemFound && !loading && (
+              <SearchResult weatherParams={params}></SearchResult>
+            )}
+            {!itemFound && !loading && <PlaceNotFound></PlaceNotFound>}
           </InfoContainer>
         </DivPaddings>
       </Rootcontainer>
-      <MainHeader $setHeight={"150px"}></MainHeader>
+      <MainHeader $setHeight={"150px"}>
+        <div style={{ display: "flex" }}>
+          <ImgFooter
+            $bgImage={LinkeLogo}
+            href="https://www.linkedin.com/in/geovane-goncalves/"
+          ></ImgFooter>
+          <LittleSpan style={{ margin: "20px" }}>
+            {" "}
+            Projeto desenvolvido para processo de teste @Amicci{" "}
+          </LittleSpan>
+        </div>
+        <div style={{ display: "flex" }}>
+          <ImgFooter
+            $bgImage={Whats}
+            href="https://wa.me/5516997944168"
+          ></ImgFooter>
+          <LittleSpan style={{ margin: "20px" }}>
+            {" "}
+            Contato via Whatsapp{" "}
+          </LittleSpan>
+        </div>
+      </MainHeader>
     </Root>
   );
 };
