@@ -6,18 +6,24 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### 
 
+### 
+
+
 Navegar até o arquivo `./usables/usables.tsx` e adicionar as keys pessoais do Google Geolocation e Open Weather API para efetividade na execução do projeto. 
 
-Adicionar o typescript ao projeto baixado:
+Instalar pacotes do projeto com:
 
-### `npm install typescript`
+### `npm install`
 
-Next, in the project directory, you can run:
+Em seguida, no diretório do projeto, executar:
 
-### `npm start`
+### ` ($env:HTTPS = "true") -and (npm start)`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Foi necessário a ativacao do HTTPS, para que nos dispositivos móveis,
+seja possível acessar a geocalizacão dos navegadores.
+
+Execute o aplicativo em modo de desenvolvimento.\
+Open [https://localhost:3000](https://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.

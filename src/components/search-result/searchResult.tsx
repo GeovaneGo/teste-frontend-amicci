@@ -2,58 +2,77 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faDroplet,
   faLocationDot,
+  faTemperature0,
   faTemperature3,
   faWind,
 } from "@fortawesome/free-solid-svg-icons";
-import { ResultContainer } from "./searchResult.styled";
-import { DefaultH1, DefaultLabels } from "../../usables/globalStyles.styled";
+import { FlagImage, GridContent, GridContent2fr, GridVertical, MoreInfos, ResultContainer, TempLabel } from "./searchResult.styled";
+import { DefaultH2, DefaultLabels } from "../../usables/globalStyles.styled";
+import { useState } from "react";
 
 export const SearchResult = (weatherParams: any) => {
   const params = weatherParams.weatherParams;
-
+  console.log(params.date)
+  
   return (
     <ResultContainer>
-      <DefaultH1>
-        <FontAwesomeIcon icon={faLocationDot} /> {params.location}
-        <img
+      <DefaultH2>
+        <FontAwesomeIcon icon={faLocationDot} style={{ marginRight: "10px" }} />{" "}
+        {params.location}
+        <FlagImage
           src={`https://countryflagsapi.netlify.app/flag/${
             params.flag || "br"
           }.svg`}
-          style={{ width: "30px", margin: "auto", marginLeft: "15px" }}
           alt=""
-        ></img>
-      </DefaultH1>
+        ></FlagImage>
+        <hr style={{margin: "5px 0"}}></hr>
+      </DefaultH2>
       <div>
-        <DefaultLabels $setMargin='0 15px 0 15px'>
-          <FontAwesomeIcon icon={faTemperature3} /> {parseInt(params.temp)} °C
-        </DefaultLabels>
-        <DefaultLabels $setMargin='0 15px'>{params.weather}</DefaultLabels>
-      </div>
-      <div
-        style={{
-          textAlign: "center",
-        }}
-      >
-        <p>
-          <img
-            src={`https://openweathermap.org/img/wn/${
-              params.icon || "01d"
-            }@2x.png`}
-            alt=""
-            style={{ width: "150px", margin: "auto" }}
-          />
-        </p>
+        <GridContent2fr>
+          <div>
+            <p>
+              <img
+                src={`https://openweathermap.org/img/wn/${
+                  params.icon || "01d"
+                }@2x.png`}
+                alt=""
+                style={{ width: "150px", margin: "auto" }}
+              />
+            </p>
+          </div>
+          <TempLabel>
+            {parseInt(params.temp)}
+          </TempLabel>
+          <GridVertical>
+            <DefaultLabels style={{textAlign: "left"}} $setMargin="auto 0">
+              °C
+            </DefaultLabels>
+            <DefaultLabels style={{textAlign: "left"}} $setMargin="auto 0">
+              {params.weather}
+            </DefaultLabels>
+          </GridVertical>
+        </GridContent2fr>
       </div>
       <div>
-        <p>
-          <DefaultLabels $setMargin='0 15px'>
-            <FontAwesomeIcon icon={faDroplet} /> {params.humidity}%<span></span>
+        <GridContent>
+          <DefaultLabels>
+            <FontAwesomeIcon icon={faDroplet} /> Umidade: {params.humidity}%<span></span>
           </DefaultLabels>
-          <DefaultLabels $setMargin='15px 0' >
-            <FontAwesomeIcon icon={faWind} /> {params.wind} Km/h
+          <DefaultLabels>
+            <FontAwesomeIcon icon={faWind} /> Vento: {params.wind} Km/h
             <span></span>
           </DefaultLabels>
-        </p>
+        </GridContent>        
+        <MoreInfos style={{backgroundColor: "white"}}>
+            <GridVertical>        
+              <DefaultLabels $setColor="#063640">
+                <FontAwesomeIcon icon={faTemperature3} style={{ marginRight: "10px" }} />Max: {parseInt(params.temp_max)}
+              </DefaultLabels>  
+              <DefaultLabels $setColor="#063640">
+                <FontAwesomeIcon icon={faTemperature0} style={{ marginRight: "10px" }} />Min: te{parseInt(params.temp_min)}
+              </DefaultLabels>      
+            </GridVertical>
+        </MoreInfos>
       </div>
     </ResultContainer>
   );

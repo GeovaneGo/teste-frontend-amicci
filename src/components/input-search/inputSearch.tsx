@@ -6,16 +6,19 @@ import {
 } from "./inputSearch.styled";
 import { faLocationDot, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { StandaloneSearchBox, LoadScript } from "@react-google-maps/api";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Usables from "../../usables/usables";
 
 export const SearchField = ({
   searchEvent,
   localWeather,
+  searchByButton
 }: {
   searchEvent: any;
   localWeather: any;
+  searchByButton: any;
 }) => {
+  const [inputValue, setInputValue]=useState<string>("")
   const inputItem: any = useRef();
 
   const SearchEvent = () => {
@@ -25,36 +28,54 @@ export const SearchField = ({
     }
   };
 
+  const SearchByButtonn =()=> {    
+    if(inputValue !== ""){  
+      searchByButton(inputValue);
+    }
+  }
+
+  const ClearInput = () => {
+    if(inputValue !== ""){
+      setInputValue("");
+    }
+    localWeather();  
+  }
+
   return (
-    <LoadScript
-      googleMapsApiKey={`${Usables.googleKey}`}
-      libraries={["places"]}
-    >
-      <StandaloneSearchBox
-        onLoad={(ref) => (inputItem.current = ref)}
-        onPlacesChanged={SearchEvent}
+    <div style={{margin: "20px 0"}}>
+      <LoadScript
+        googleMapsApiKey={`${Usables.googleKey}`}
+        libraries={["places"]}
       >
-        <InputContainer>
-          <SearchInput
-            id="autocomplete"
-            type="texts"
-            placeholder="Pesquise um local: Ex. 'Curitiba'"
-          ></SearchInput>
-          <SeatchButton onClick={() => SearchEvent()}>
-            <FontAwesomeIcon
-              icon={faSearch}
-              style={{ width: "20px", height: "20px" }}
-            />
-          </SeatchButton>
-          <SeatchButton onClick={() => localWeather()}>
-            <FontAwesomeIcon
-              icon={faLocationDot}
-              style={{ width: "20px", height: "20px" }}
-            />
-          </SeatchButton>
-        </InputContainer>
-      </StandaloneSearchBox>
-    </LoadScript>
+        <StandaloneSearchBox
+          onLoad={(ref) => (inputItem.current = ref)}
+          onPlacesChanged={SearchEvent}
+        >
+          <InputContainer>
+            <SearchInput
+              id="autocomplete"
+              type="texts"
+              placeholder="Pesquise um local: Ex. 'Curitiba'"
+              onChange={(e) => setInputValue(e.target.value)}
+              value={inputValue}
+            ></SearchInput>
+            <SeatchButton onClick={SearchByButtonn}>
+              <FontAwesomeIcon
+                icon={faSearch}
+                style={{ width: "20px", height: "20px" }}
+              />
+            </SeatchButton>
+            <SeatchButton onClick={ClearInput}>
+              <FontAwesomeIcon
+                icon={faLocationDot}
+                style={{ width: "20px", height: "20px" }}
+              />
+            </SeatchButton>
+          </InputContainer>
+        </StandaloneSearchBox>
+      </LoadScript>
+    </div>
+    
   );
 };
 

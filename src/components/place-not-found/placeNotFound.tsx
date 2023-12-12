@@ -4,7 +4,7 @@ import { DefaultImg, DivContent, MainDiv } from "./placeNotFound.styled";
 
 export const PlaceNotFound = () => {
   return (
-    <DivPaddings>
+    <DivPaddings style={{marginTop: "30px"}}>
       <MainDiv>
         <DivContent>
           <DefaultImg src={NotFoundImage}></DefaultImg>

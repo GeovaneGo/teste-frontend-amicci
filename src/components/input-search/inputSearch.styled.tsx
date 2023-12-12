@@ -7,12 +7,12 @@ export const InputContainer = styled.div`
 export const SeatchButton = styled.button`
   min-width: 40px;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 10px;
   margin-left: 10px;
   border: none;
   color: white;
   cursor: pointer;
-  background-color: #343d5f;
+  background-color: #7386cd;
   &:hover {
     box-shadow: 0px 0px 3px #94e6fa;
     animation: tilt 200ms;

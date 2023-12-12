@@ -1,15 +1,16 @@
 import styled from "styled-components";
 
 export const Root = styled.div`
-  min-height: 150dvh;
-`;
+  min-height: 100dvh;
+  `
 
-export const Rootcontainer = styled.div`
+export const Rootcontainer = styled.div<{ $bgImage?: string}>`
   display: flex;
-  padding: 10px 0px;
-  background-image: url("https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77700415632.jpg");
-  background-size: cover;
+  padding: 10px 0px;  
+  background-image: url(${props => props.$bgImage});
   background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
 
   @media (min-width: 600px) {
     padding: 10px 100px;
@@ -29,24 +30,25 @@ export const Rootcontainer = styled.div`
 `;
 
 export const InfoContainer = styled.div`
+  min-height: 80dvh;
   border-color: #b3ffff;
   border-style: solid;
   border-width: 1px;
   border-radius: 15px;
   width: 100%;
-  min-height: 600px;
   padding: 20px;
-  box-shadow: 0px 2px 5px #b3ffff;
+  box-shadow: 0px 1px 2px #b3ffff;
+  background-color:#063640;
   @media (min-width: 600px) {
-    width: 350px;
-  }
-
-  @media (min-width: 900px) {
     width: 400px;
   }
 
-  @media (min-width: 1270px) {
+  @media (min-width: 900px) {
     width: 450px;
+  }
+
+  @media (min-width: 1270px) {
+    width: 500px;
   }
 
   @media (min-width: 1520px) {
@@ -54,12 +56,11 @@ export const InfoContainer = styled.div`
   }
 `;
 
-export const MainHeader = styled.header`
-  background-color: #343d5f;
-  height: 80px;
+export const MainHeader = styled.header<{$setHeight?: string}>`
+  background-color: #063640;
+  height: ${props => props.$setHeight || "80px"};
   display: flex;
   grid-template-columns: 1fr;
-
   padding: 10px 50px;
 
   @media (min-width: 600px) {

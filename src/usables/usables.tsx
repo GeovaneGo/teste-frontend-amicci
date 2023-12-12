@@ -2,7 +2,9 @@ const Usables = {
   //weather key for api
   weatherKey: "dcd32d369d64f26799658ac612a667ac",
   // google key for api
-  googleKey: "",
+  googleKey: "AIzaSyAS8WyUKsP7QrxOIzt0kz2xsbf7tNkfjio",
+  //photo from cities
+  photos: "https://source.unsplash.com/1600x900/?",
   //String XSS validation
   validateXSS: function (xssValue: string) {
     return String(xssValue).replace(/[^\w. ]/gi, function (c) {
