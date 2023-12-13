@@ -4,12 +4,16 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Available Scripts
 
-### 
+###
 
-### 
+###
 
+Projeto Online em Mobile ou Web:
+https://frontend-amicci.netlify.app/
 
-Navegar até o arquivo `./usables/usables.tsx` e adicionar as keys pessoais do Google Geolocation e Open Weather API para efetividade na execução do projeto. 
+###
+
+Navegar até o arquivo `./usables/usables.tsx` e adicionar as keys pessoais do Google Geolocation e Open Weather API para efetividade na execução do projeto.
 
 Instalar pacotes do projeto com:
 

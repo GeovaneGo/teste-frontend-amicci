@@ -4,12 +4,11 @@ import {
   LittleSpan,
 } from "../../usables/globalStyles.styled";
 import { DivContent, MainDiv } from "./placeNotFound.styled";
-import DesertPlace from "../../desertplace.png";
 
 export const PlaceNotFound = () => {
   return (
     <DivPaddings style={{ marginTop: "50px" }}>
-      <MainDiv $bgImage={DesertPlace}>
+      <MainDiv $bgImage={"desertplace.png"}>
         <DivContent></DivContent>
         <DivContent style={{ background: "rgba(255,255,255,0.4)" }}>
           <div style={{ margin: "auto" }}>

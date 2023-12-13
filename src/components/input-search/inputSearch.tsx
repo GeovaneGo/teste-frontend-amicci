@@ -14,9 +14,9 @@ export const SearchField = ({
   localWeather,
   searchByButton,
 }: {
-  searchEvent: any;
-  localWeather: any;
-  searchByButton: any;
+  searchEvent?: any;
+  localWeather?: any;
+  searchByButton?: any;
 }) => {
   const [inputValue, setInputValue] = useState<string>("");
   const [inputElement, setInput] = useState<any>();
@@ -25,6 +25,7 @@ export const SearchField = ({
   const SearchEvent = () => {
     const place = inputItem.current.getPlaces();
     if (place) {
+      setInputValue(place[0].name);
       searchEvent(place);
     }
   };
@@ -53,17 +54,17 @@ export const SearchField = ({
           onLoad={(ref) => (inputItem.current = ref)}
           onPlacesChanged={SearchEvent}
         >
-          <InputContainer>
+          <InputContainer role="search-bar">
             <SearchInput
               id="autocomplete"
-              type="texts"
+              type="text"
               placeholder="Buscar local: Ex. 'Curitiba'"
               onChange={(e) => {
                 setInputValue(e.target.value);
                 setInput(e.target);
               }}
             ></SearchInput>
-            <SeatchButton onClick={SearchByButtonn}>
+            <SeatchButton role="search-btn" onClick={SearchByButtonn}>
               <FontAwesomeIcon
                 icon={faSearch}
                 style={{ width: "20px", height: "20px" }}

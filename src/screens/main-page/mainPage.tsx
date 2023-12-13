@@ -17,9 +17,6 @@ import {
   DivPaddings,
   LittleSpan,
 } from "../../usables/globalStyles.styled";
-import LinkeLogo from "../../linkedin.png";
-import Whats from "../../whatsapp.png";
-import BannerImg from "../../banner.png";
 import Skeleton from "../../components/skeleton-loading/skeletonLoading";
 //import geolocationApi from "../../api/geolocationApi";
 
@@ -132,7 +129,7 @@ export const MainPage = () => {
         */
       });
     } else {
-      alert("A Geolocalização de seu navegador está desabilitada");
+      console.log("A Geolocalização de seu navegador está desabilitada");
     }
   };
 
@@ -165,9 +162,11 @@ export const MainPage = () => {
   return (
     <Root>
       <MainHeader $setHeight="90px">
-        <BannerName $srcImg={BannerImg}></BannerName>
+        <BannerName $srcImg={"banner.png"}></BannerName>
       </MainHeader>
-      <Rootcontainer $bgImage={Usables.photos + `${cityName}`}>
+      <Rootcontainer
+        $bgImage={Usables.photos + encodeURIComponent(`${cityName}`)}
+      >
         <DivPaddings>
           <InfoContainer>
             <div>
@@ -190,7 +189,7 @@ export const MainPage = () => {
       <MainHeader $setHeight={"150px"}>
         <div style={{ display: "flex" }}>
           <ImgFooter
-            $bgImage={LinkeLogo}
+            $bgImage={"linkedin.png"}
             href="https://www.linkedin.com/in/geovane-goncalves/"
           ></ImgFooter>
           <LittleSpan style={{ margin: "20px" }}>
@@ -200,7 +199,7 @@ export const MainPage = () => {
         </div>
         <div style={{ display: "flex" }}>
           <ImgFooter
-            $bgImage={Whats}
+            $bgImage={"whatsapp.png"}
             href="https://wa.me/5516997944168"
           ></ImgFooter>
           <LittleSpan style={{ margin: "20px" }}>

@@ -87,7 +87,7 @@ export default {
   // ],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
-  // moduleNameMapper: {},
+   //moduleNameMapper: {},
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
   // modulePathIgnorePatterns: [],
@@ -179,9 +179,30 @@ export default {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    '^.+\.js$': 'babel-jest',
-    '^.+\.tsx?$': 'ts-jest',
-    '^.+\.jsx?$': 'babel-jest'
+    "^.+\\.(t|j)sx?$": [
+      "@swc/jest",
+      {	 
+        jsc: {	
+          parser: {	
+            syntax: "typescript",	
+            tsx: true,	
+            decorators: true,	
+          },	
+          keepClassNames: true,	
+          transform: {	
+            legacyDecorator: true,	
+            decoratorMetadata: true,	
+            react: {	
+              runtime: "automatic",	
+            },	
+          },	
+        },	
+        module: {	
+          type: "es6",	
+          noInterop: false,	
+        },	
+      },	
+    ],
   },
 
   // An array of regexp pattern strings that are matched against all source file paths, matched files will skip transformation
